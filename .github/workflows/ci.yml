@@ -1,0 +1,25 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build Solution
+      run: msbuild GitHubTestingAutomation.sln /p:Configuration=Debug
+
+    - name: Run Tests
+      run: |
+        UnitTest-IsPrime\$(Platform)\Debug\UnitTest-IsPrime.exe
