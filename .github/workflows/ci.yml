@@ -17,9 +17,11 @@ jobs:
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v1
 
+    - name: Restore NuGet packages
+      run: nuget restore GitHubTestingAutomation.sln
+
     - name: Build Solution
       run: msbuild GitHubTestingAutomation.sln /p:Configuration=Debug
 
     - name: Run Tests
-      run: |
-        UnitTest-IsPrime\$(Platform)\Debug\UnitTest-IsPrime.exe
+      run: UnitTest-IsPrime\x64\Debug\UnitTest-IsPrime.exe
